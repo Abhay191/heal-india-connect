@@ -52,6 +52,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				'medical-blue': 'hsl(var(--medical-blue))',
+				'health-green': 'hsl(var(--health-green))',
+				'trust-blue': 'hsl(var(--trust-blue))',
+				'success-green': 'hsl(var(--success-green))',
+				'warning-orange': 'hsl(var(--warning-orange))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -67,6 +72,16 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			backgroundImage: {
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-card': 'var(--gradient-card)',
+				'gradient-accent': 'var(--gradient-accent)'
+			},
+			boxShadow: {
+				'card': 'var(--shadow-card)',
+				'hover': 'var(--shadow-hover)',
+				'glow': 'var(--shadow-glow)'
 			},
 			keyframes: {
 				'accordion-down': {
