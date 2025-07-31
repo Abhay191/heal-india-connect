@@ -17,41 +17,41 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 27%;
 
-    --primary: 217 91% 60%;
+    --primary: 14 100% 57%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 214 32% 91%;
-    --secondary-foreground: 215 25% 27%;
+    --secondary: 210 40% 94%;
+    --secondary-foreground: 222 84% 4.9%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 46.9%;
 
-    --accent: 160 84% 39%;
+    --accent: 198 89% 48%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 217 91% 60%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 14 100% 57%;
 
     /* Medical tourism specific tokens */
-    --medical-blue: 217 91% 60%;
-    --health-green: 160 84% 39%;
-    --trust-blue: 213 94% 68%;
-    --success-green: 142 76% 36%;
+    --medical-blue: 198 89% 48%;
+    --health-green: 142 71% 45%;
+    --trust-blue: 206 100% 70%;
+    --success-green: 142 71% 45%;
     --warning-orange: 25 95% 53%;
     
     /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(var(--medical-blue)), hsl(var(--trust-blue)));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14% 98%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 40% 98%));
     --gradient-accent: linear-gradient(135deg, hsl(var(--health-green)), hsl(var(--success-green)));
     
     /* Shadows */
-    --shadow-card: 0 4px 6px -1px hsl(var(--medical-blue) / 0.1);
-    --shadow-hover: 0 10px 15px -3px hsl(var(--medical-blue) / 0.15);
-    --shadow-glow: 0 0 20px hsl(var(--trust-blue) / 0.3);
+    --shadow-card: 0 4px 6px -1px hsl(var(--medical-blue) / 0.12);
+    --shadow-hover: 0 10px 25px -3px hsl(var(--medical-blue) / 0.2);
+    --shadow-glow: 0 0 30px hsl(var(--trust-blue) / 0.4);
 
     --radius: 0.5rem;
 
@@ -82,8 +82,8 @@ All colors MUST be HSL.
     --popover: 215 28% 17%;
     --popover-foreground: 213 31% 91%;
 
-    --primary: 217 91% 60%;
-    --primary-foreground: 215 28% 17%;
+    --primary: 14 100% 57%;
+    --primary-foreground: 0 0% 98%;
 
     --secondary: 215 25% 27%;
     --secondary-foreground: 213 31% 91%;

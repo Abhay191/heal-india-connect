@@ -2,8 +2,38 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calculator, Globe, Heart, Shield, Star } from "lucide-react";
 import heroImage from "@/assets/hero-medical-tourism.jpg";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useInquiry } from "@/hooks/useInquiry";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const { submitInquiry, isSubmitting } = useInquiry();
+  const [formData, setFormData] = useState({
+    treatment: '',
+    name: '',
+    email: '',
+    phone: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.treatment || !formData.name || !formData.email || !formData.phone) {
+      return;
+    }
+    
+    const success = await submitInquiry({
+      treatmentCategory: formData.treatment,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+    });
+
+    if (success) {
+      setFormData({ treatment: '', name: '', email: '', phone: '' });
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-hero">
       {/* Background Image with Overlay */}
@@ -52,10 +82,19 @@ const Hero = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-health-green hover:bg-success-green text-white px-8">
+              <Button 
+                size="lg" 
+                className="bg-health-green hover:bg-success-green text-white px-8"
+                onClick={() => navigate('/services')}
+              >
                 Find Treatment
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-8">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-white text-white hover:bg-white hover:text-primary px-8"
+                onClick={() => navigate('/contact')}
+              >
                 <Calculator className="w-4 h-4 mr-2" />
                 Cost Calculator
               </Button>
@@ -91,17 +130,22 @@ const Hero = () => {
                   <p className="text-muted-foreground text-sm">Connect with our medical experts</p>
                 </div>
 
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <div>
                     <label className="text-sm font-medium text-foreground">Treatment Required</label>
-                    <select className="w-full mt-1 p-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent">
-                      <option>Select Treatment</option>
-                      <option>Cardiac Surgery</option>
-                      <option>Cancer Treatment</option>
-                      <option>Fertility/IVF</option>
-                      <option>Orthopedics</option>
-                      <option>Organ Transplant</option>
-                      <option>Cosmetic Surgery</option>
+                    <select 
+                      className="w-full mt-1 p-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.treatment}
+                      onChange={(e) => setFormData({...formData, treatment: e.target.value})}
+                      required
+                    >
+                      <option value="">Select Treatment</option>
+                      <option value="Cardiac Surgery">Cardiac Surgery</option>
+                      <option value="Cancer Treatment">Cancer Treatment</option>
+                      <option value="Fertility/IVF">Fertility/IVF</option>
+                      <option value="Orthopedics">Orthopedics</option>
+                      <option value="Organ Transplant">Organ Transplant</option>
+                      <option value="Cosmetic Surgery">Cosmetic Surgery</option>
                     </select>
                   </div>
 
@@ -111,6 +155,9 @@ const Hero = () => {
                       type="text" 
                       placeholder="Enter your name"
                       className="w-full mt-1 p-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      required
                     />
                   </div>
 
@@ -120,6 +167,9 @@ const Hero = () => {
                       type="email" 
                       placeholder="Enter your email"
                       className="w-full mt-1 p-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      required
                     />
                   </div>
 
@@ -129,11 +179,19 @@ const Hero = () => {
                       type="tel" 
                       placeholder="Enter your phone"
                       className="w-full mt-1 p-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      required
                     />
                   </div>
 
-                  <Button className="w-full bg-gradient-hero hover:opacity-90" size="lg">
-                    Get Free Quote
+                  <Button 
+                    type="submit"
+                    className="w-full bg-gradient-hero hover:opacity-90" 
+                    size="lg"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Get Free Quote'}
                   </Button>
                 </form>
 

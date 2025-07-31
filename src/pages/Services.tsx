@@ -149,7 +149,10 @@ const Services = () => {
                         <p className="font-semibold text-green-600">{service.savings}</p>
                       </div>
                     </div>
-                    <Button className="w-full mt-4">
+                    <Button 
+                      className="w-full mt-4"
+                      onClick={() => window.open('/contact', '_blank')}
+                    >
                       Get Quote
                     </Button>
                   </div>

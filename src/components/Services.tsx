@@ -10,8 +10,10 @@ import {
   Smile,
   Leaf
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Services = () => {
+  const navigate = useNavigate();
   const services = [
     {
       icon: Heart,
@@ -126,6 +128,7 @@ const Services = () => {
                     variant="outline" 
                     size="sm" 
                     className="w-full mt-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300"
+                    onClick={() => navigate('/services')}
                   >
                     Learn More
                   </Button>
@@ -136,7 +139,11 @@ const Services = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button size="lg" className="bg-gradient-hero hover:opacity-90 px-8">
+          <Button 
+            size="lg" 
+            className="bg-gradient-hero hover:opacity-90 px-8"
+            onClick={() => navigate('/services')}
+          >
             View All Services
           </Button>
         </div>

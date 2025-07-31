@@ -2,8 +2,10 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Star, Award, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedHospitals = () => {
+  const navigate = useNavigate();
   const hospitals = [
     {
       name: "Apollo Hospitals",
@@ -129,7 +131,11 @@ const FeaturedHospitals = () => {
                       <span className="text-sm text-muted-foreground">{hospital.reviews.toLocaleString()} reviews</span>
                     </div>
                   </div>
-                  <Button size="sm" className="bg-gradient-hero hover:opacity-90">
+                  <Button 
+                    size="sm" 
+                    className="bg-gradient-hero hover:opacity-90"
+                    onClick={() => navigate('/hospitals')}
+                  >
                     View Details
                   </Button>
                 </div>
@@ -139,7 +145,12 @@ const FeaturedHospitals = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button size="lg" variant="outline" className="px-8">
+          <Button 
+            size="lg" 
+            variant="outline" 
+            className="px-8"
+            onClick={() => navigate('/hospitals')}
+          >
             View All Hospitals
           </Button>
         </div>
