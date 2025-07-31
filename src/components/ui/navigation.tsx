@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Heart, Globe } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -20,23 +22,23 @@ const Navigation = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
               <Heart className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-foreground">HealYourTrip</span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -46,10 +48,14 @@ const Navigation = () => {
               <Globe className="w-4 h-4 mr-2" />
               EN
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => navigate('/contact')}>
               Login
             </Button>
-            <Button size="sm" className="bg-gradient-hero hover:opacity-90">
+            <Button 
+              size="sm" 
+              className="bg-gradient-hero hover:opacity-90"
+              onClick={() => navigate('/contact')}
+            >
               Get Started
             </Button>
           </div>
@@ -64,24 +70,38 @@ const Navigation = () => {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex flex-col space-y-4 mt-8">
                 {navItems.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
                     className="text-foreground hover:text-primary transition-colors duration-200 font-medium py-2"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
                 <div className="flex flex-col space-y-2 pt-4 border-t">
                   <Button variant="ghost" size="sm" className="justify-start">
                     <Globe className="w-4 h-4 mr-2" />
                     Language
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => {
+                      navigate('/contact');
+                      setIsOpen(false);
+                    }}
+                  >
                     Login
                   </Button>
-                  <Button size="sm" className="bg-gradient-hero hover:opacity-90">
+                  <Button 
+                    size="sm" 
+                    className="bg-gradient-hero hover:opacity-90"
+                    onClick={() => {
+                      navigate('/contact');
+                      setIsOpen(false);
+                    }}
+                  >
                     Get Started
                   </Button>
                 </div>

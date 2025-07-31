@@ -4,8 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart, Users, Award, Globe, Shield, Clock, CheckCircle, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate();
   const stats = [
     { label: "Patients Served", value: "50,000+", icon: Users },
     { label: "Partner Hospitals", value: "200+", icon: Heart },
@@ -71,7 +73,11 @@ const About = () => {
             <p className="text-xl text-muted-foreground mb-8">
               Connecting patients worldwide with India's finest healthcare providers. We make quality medical treatment accessible and affordable for everyone.
             </p>
-            <Button size="lg" className="bg-gradient-hero hover:opacity-90">
+            <Button 
+              size="lg" 
+              className="bg-gradient-hero hover:opacity-90"
+              onClick={() => navigate('/contact')}
+            >
               Start Your Journey
             </Button>
           </div>

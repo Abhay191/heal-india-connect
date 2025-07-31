@@ -17,6 +17,7 @@ export const useInquiry = () => {
   const { toast } = useToast();
 
   const submitInquiry = async (data: InquiryData) => {
+    console.log("Submitting inquiry with data:", data);
     setIsSubmitting(true);
     
     try {
