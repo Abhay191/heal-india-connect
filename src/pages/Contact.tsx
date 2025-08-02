@@ -7,8 +7,57 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
+import { useInquiry } from "@/hooks/useInquiry";
+import { useState } from "react";
+import { toast } from "@/components/ui/sonner";
 
 const Contact = () => {
+  const { submitInquiry, isSubmitting } = useInquiry();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    country: '',
+    treatment: '',
+    budget: '',
+    message: '',
+    timeline: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.treatment || !formData.message) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    const success = await submitInquiry({
+      treatmentCategory: formData.treatment,
+      name: `${formData.firstName} ${formData.lastName}`,
+      email: formData.email,
+      phone: formData.phone,
+      message: `${formData.message}\n\nAdditional Details:\nCountry: ${formData.country}\nBudget Range: ${formData.budget}\nPreferred Timeline: ${formData.timeline}`,
+      budgetRange: formData.budget,
+      preferredLocation: 'India'
+    });
+
+    if (success) {
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        country: '',
+        treatment: '',
+        budget: '',
+        message: '',
+        timeline: ''
+      });
+    }
+  };
+
   const contactInfo = [
     {
       icon: Phone,
@@ -130,37 +179,68 @@ const Contact = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name *</Label>
-                      <Input id="firstName" placeholder="Enter your first name" required />
+                      <Input 
+                        id="firstName" 
+                        placeholder="Enter your first name" 
+                        value={formData.firstName}
+                        onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                        required 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name *</Label>
-                      <Input id="lastName" placeholder="Enter your last name" required />
+                      <Input 
+                        id="lastName" 
+                        placeholder="Enter your last name" 
+                        value={formData.lastName}
+                        onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                        required 
+                      />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="email">Email *</Label>
-                      <Input id="email" type="email" placeholder="Enter your email" required />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        required 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
-                      <Input id="phone" placeholder="Enter your phone number" required />
+                      <Input 
+                        id="phone" 
+                        placeholder="Enter your phone number" 
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        required 
+                      />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="country">Country *</Label>
-                      <Input id="country" placeholder="Enter your country" required />
+                      <Input 
+                        id="country" 
+                        placeholder="Enter your country" 
+                        value={formData.country}
+                        onChange={(e) => setFormData({...formData, country: e.target.value})}
+                        required 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="treatment">Treatment Category *</Label>
-                      <Select>
+                      <Select value={formData.treatment} onValueChange={(value) => setFormData({...formData, treatment: value})}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select treatment category" />
                         </SelectTrigger>
@@ -177,7 +257,7 @@ const Contact = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="budget">Budget Range (USD)</Label>
-                    <Select>
+                    <Select value={formData.budget} onValueChange={(value) => setFormData({...formData, budget: value})}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your budget range" />
                       </SelectTrigger>
@@ -197,13 +277,15 @@ const Contact = () => {
                       id="message" 
                       placeholder="Please describe your medical condition, treatment requirements, preferred location, and any other relevant details..."
                       className="min-h-32"
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
                       required 
                     />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="timeline">Preferred Treatment Timeline</Label>
-                    <Select>
+                    <Select value={formData.timeline} onValueChange={(value) => setFormData({...formData, timeline: value})}>
                       <SelectTrigger>
                         <SelectValue placeholder="When would you like to receive treatment?" />
                       </SelectTrigger>
@@ -217,9 +299,13 @@ const Contact = () => {
                     </Select>
                   </div>
 
-                  <Button type="submit" className="w-full bg-gradient-hero hover:opacity-90">
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-gradient-hero hover:opacity-90"
+                    disabled={isSubmitting}
+                  >
                     <Send className="w-4 h-4 mr-2" />
-                    Send Message
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                   </Button>
 
                   <p className="text-sm text-muted-foreground text-center">

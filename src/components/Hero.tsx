@@ -5,6 +5,7 @@ import heroImage from "@/assets/hero-medical-tourism.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInquiry } from "@/hooks/useInquiry";
+import { toast } from "@/components/ui/sonner";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Hero = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.treatment || !formData.name || !formData.email || !formData.phone) {
+      toast.error("Please fill in all required fields");
       return;
     }
     
@@ -27,6 +29,7 @@ const Hero = () => {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
+      message: `I am interested in ${formData.treatment} treatment. Please provide me with more information about costs, procedures, and available hospitals.`
     });
 
     if (success) {

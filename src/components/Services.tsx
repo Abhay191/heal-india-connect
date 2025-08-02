@@ -11,9 +11,12 @@ import {
   Leaf
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTreatments } from "@/hooks/useSupabaseData";
 
 const Services = () => {
   const navigate = useNavigate();
+  const { treatments, loading } = useTreatments();
+  
   const services = [
     {
       icon: Heart,
@@ -137,6 +140,12 @@ const Services = () => {
             );
           })}
         </div>
+
+        {loading && (
+          <div className="text-center mt-8">
+            <p className="text-muted-foreground">Loading additional services...</p>
+          </div>
+        )}
 
         <div className="text-center mt-12">
           <Button 

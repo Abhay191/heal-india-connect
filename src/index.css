@@ -9,102 +9,96 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 215 25% 27%;
+    --foreground: 222 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 27%;
+    --card-foreground: 222 84% 4.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 27%;
+    --popover-foreground: 222 84% 4.9%;
 
-    --primary: 14 100% 57%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 94%;
+    --secondary: 210 40% 96%;
     --secondary-foreground: 222 84% 4.9%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 46.9%;
 
-    --accent: 198 89% 48%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 84% 4.9%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 14 100% 57%;
+    --ring: 221 83% 53%;
 
-    /* Medical tourism specific tokens */
-    --medical-blue: 198 89% 48%;
-    --health-green: 142 71% 45%;
-    --trust-blue: 206 100% 70%;
+    /* Medical tourism specific tokens - Updated for better clarity */
+    --medical-blue: 221 83% 53%;
+    --health-green: 142 76% 36%;
+    --trust-blue: 217 91% 60%;
     --success-green: 142 71% 45%;
     --warning-orange: 25 95% 53%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--medical-blue)), hsl(var(--trust-blue)));
+    /* Gradients - Updated for better contrast */
+    --gradient-hero: linear-gradient(135deg, hsl(221 83% 53%), hsl(217 91% 60%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 40% 98%));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--health-green)), hsl(var(--success-green)));
+    --gradient-accent: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 71% 45%));
     
-    /* Shadows */
-    --shadow-card: 0 4px 6px -1px hsl(var(--medical-blue) / 0.12);
-    --shadow-hover: 0 10px 25px -3px hsl(var(--medical-blue) / 0.2);
-    --shadow-glow: 0 0 30px hsl(var(--trust-blue) / 0.4);
+    /* Shadows - Enhanced for better visibility */
+    --shadow-card: 0 4px 6px -1px hsl(221 83% 53% / 0.1);
+    --shadow-hover: 0 10px 25px -3px hsl(221 83% 53% / 0.25);
+    --shadow-glow: 0 0 30px hsl(217 91% 60% / 0.3);
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 215 28% 17%;
-    --foreground: 213 31% 91%;
+    --background: 222 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-    --card: 215 28% 17%;
-    --card-foreground: 213 31% 91%;
+    --card: 222 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 215 28% 17%;
-    --popover-foreground: 213 31% 91%;
+    --popover: 222 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 14 100% 57%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 84% 4.9%;
 
-    --secondary: 215 25% 27%;
-    --secondary-foreground: 213 31% 91%;
+    --secondary: 217 32% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 215 25% 27%;
-    --muted-foreground: 217 10% 65%;
+    --muted: 217 32% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 160 84% 39%;
-    --accent-foreground: 213 31% 91%;
+    --accent: 217 32% 17.5%;
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 213 31% 91%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 215 25% 27%;
-    --input: 215 25% 27%;
-    --ring: 217 91% 60%;
+    --border: 217 32% 17.5%;
+    --input: 217 32% 17.5%;
+    --ring: 224.3 76.3% 48%;
 
     /* Dark mode gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--medical-blue)), hsl(215 25% 27%));
-    --gradient-card: linear-gradient(145deg, hsl(215 28% 17%), hsl(215 25% 27%));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--health-green)), hsl(var(--success-green)));
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 32% 17.5%));
+    --gradient-card: linear-gradient(145deg, hsl(222 84% 4.9%), hsl(217 32% 17.5%));
+    --gradient-accent: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 71% 45%));
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -123,5 +117,24 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
 }

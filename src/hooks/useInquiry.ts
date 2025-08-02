@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/sonner';
 
 interface InquiryData {
   treatmentCategory: string;
@@ -14,68 +14,76 @@ interface InquiryData {
 
 export const useInquiry = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
 
   const submitInquiry = async (data: InquiryData) => {
     console.log("Submitting inquiry with data:", data);
     setIsSubmitting(true);
     
     try {
-      // First, we need to check if the user has a profile
-      const { data: { user } } = await supabase.auth.getUser();
+      // For now, we'll create a simple inquiry without authentication
+      // In a real app, you'd want proper user authentication
       
-      if (!user) {
-        // Handle anonymous inquiry - for now, we'll show a message
-        toast({
-          title: "Sign up required",
-          description: "Please sign up to submit your inquiry. We'll contact you shortly!",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Get user's profile
-      const { data: profile } = await supabase
+      // First, let's try to create or get a profile for this email
+      let profileId: string;
+      
+      // Check if profile exists with this email
+      const { data: existingProfile } = await supabase
         .from('profiles')
         .select('id')
-        .eq('user_id', user.id)
+        .eq('email', data.email)
         .single();
 
-      if (!profile) {
-        toast({
-          title: "Profile not found",
-          description: "Please complete your profile first.",
-          variant: "destructive",
-        });
-        return;
+      if (existingProfile) {
+        profileId = existingProfile.id;
+      } else {
+        // Create a temporary profile for the inquiry
+        const { data: newProfile, error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+            email: data.email,
+            full_name: data.name,
+            phone: data.phone,
+            user_id: crypto.randomUUID(), // Temporary UUID for guest users
+            role: 'patient'
+          })
+          .select('id')
+          .single();
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+          throw new Error('Failed to create profile');
+        }
+        
+        profileId = newProfile.id;
       }
 
       // Submit inquiry
       const { error } = await supabase
         .from('inquiries')
         .insert({
-          patient_id: profile.id,
+          patient_id: profileId,
           treatment_category: data.treatmentCategory,
-          message: data.message || `Treatment inquiry for ${data.treatmentCategory}`,
+          message: data.message || `Treatment inquiry for ${data.treatmentCategory} from ${data.name}`,
           phone: data.phone,
           preferred_location: data.preferredLocation,
           budget_range: data.budgetRange,
+          status: 'new'
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Inquiry submission error:', error);
+        throw error;
+      }
 
-      toast({
-        title: "Inquiry submitted successfully!",
-        description: "Our team will contact you within 24 hours.",
+      toast.success("Inquiry submitted successfully!", {
+        description: "Our team will contact you within 24 hours."
       });
 
       return true;
     } catch (error) {
       console.error('Error submitting inquiry:', error);
-      toast({
-        title: "Submission failed",
-        description: "Please try again or contact support.",
-        variant: "destructive",
+      toast.error("Submission failed", {
+        description: "Please try again or contact support directly."
       });
       return false;
     } finally {

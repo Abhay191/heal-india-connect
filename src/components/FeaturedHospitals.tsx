@@ -3,51 +3,28 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Star, Award, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useHospitals } from "@/hooks/useSupabaseData";
 
 const FeaturedHospitals = () => {
   const navigate = useNavigate();
-  const hospitals = [
-    {
-      name: "Apollo Hospitals",
-      location: "Delhi, Mumbai, Chennai",
-      image: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=400&h=300&fit=crop",
-      specializations: ["Cardiac Surgery", "Oncology", "Transplants"],
-      accreditations: ["JCI", "NABH"],
-      rating: 4.8,
-      reviews: 2840,
-      description: "Asia's leading healthcare group with over 70 hospitals across India."
-    },
-    {
-      name: "Fortis Healthcare",
-      location: "Delhi, Bangalore, Mumbai",
-      image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400&h=300&fit=crop",
-      specializations: ["Orthopedics", "Neuroscience", "Fertility"],
-      accreditations: ["JCI", "NABH", "ISO"],
-      rating: 4.7,
-      reviews: 1920,
-      description: "Renowned for advanced medical technology and expert medical professionals."
-    },
-    {
-      name: "Max Healthcare",
-      location: "Delhi NCR, Punjab",
-      image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=300&fit=crop",
-      specializations: ["Cancer Care", "Heart Surgery", "Robotic Surgery"],
-      accreditations: ["NABH", "NABL"],
-      rating: 4.6,
-      reviews: 1560,
-      description: "Leading healthcare provider with state-of-the-art medical facilities."
-    },
-    {
-      name: "Medanta - The Medicity",
-      location: "Gurgaon, Lucknow",
-      image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=400&h=300&fit=crop",
-      specializations: ["Multi-organ Transplant", "Cardiac Sciences", "Oncology"],
-      accreditations: ["JCI", "NABH"],
-      rating: 4.9,
-      reviews: 3200,
-      description: "One of India's largest multi-specialty medical institutes."
-    }
-  ];
+  const { hospitals, loading, error } = useHospitals();
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Top Partner Hospitals
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Loading hospitals...
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-background">
@@ -71,17 +48,17 @@ const FeaturedHospitals = () => {
               {/* Hospital Image */}
               <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={hospital.image} 
+                  src={hospital.image_url || "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=400&h=300&fit=crop"} 
                   alt={hospital.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-4 left-4">
                   <div className="flex gap-2">
-                    {hospital.accreditations.map((acc, i) => (
+                    {hospital.accreditations?.map((acc, i) => (
                       <Badge key={i} variant="secondary" className="bg-white/90 text-primary">
                         {acc}
                       </Badge>
-                    ))}
+                    )) || []}
                   </div>
                 </div>
                 <div className="absolute top-4 right-4">
@@ -104,18 +81,18 @@ const FeaturedHospitals = () => {
 
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  {hospital.description}
+                  {hospital.description || "Leading healthcare facility with advanced medical services."}
                 </p>
 
                 {/* Specializations */}
                 <div>
                   <span className="text-sm font-medium text-foreground mb-2 block">Specializations:</span>
                   <div className="flex flex-wrap gap-2">
-                    {hospital.specializations.map((spec, i) => (
+                    {hospital.specializations?.map((spec, i) => (
                       <Badge key={i} variant="outline" className="text-xs">
                         {spec}
                       </Badge>
-                    ))}
+                    )) || []}
                   </div>
                 </div>
 
@@ -128,7 +105,7 @@ const FeaturedHospitals = () => {
                     </div>
                     <div className="flex items-center space-x-1">
                       <Users className="w-4 h-4 text-primary" />
-                      <span className="text-sm text-muted-foreground">{hospital.reviews.toLocaleString()} reviews</span>
+                      <span className="text-sm text-muted-foreground">{hospital.total_reviews?.toLocaleString() || '0'} reviews</span>
                     </div>
                   </div>
                   <Button 
